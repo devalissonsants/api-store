@@ -1,4 +1,4 @@
-const postsData = require('../data/postsData');
+const postsData = require('../data/orderData');
 
 exports.getPosts = function() {
     return true;

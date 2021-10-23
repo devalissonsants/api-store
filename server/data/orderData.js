@@ -1,5 +1,5 @@
 const database = require('../infra/database');
 
-exports.getPosts = function() {
+exports.getOrders = function() {
     //query db
 };

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const postsService = require('../service/postsService');
+const postsService = require('../service/orderService');
 
 router.get('/order-of-service', async function(req, res) {
     res.json('teste');
