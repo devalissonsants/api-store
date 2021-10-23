@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const database = require('./db');
+const database = require('../infra/sequelizeDB');
 
 const Client = database.define('client', {
     id: {
@@ -38,6 +38,10 @@ const Client = database.define('client', {
         allowNull: true
     },
     phone_number: {
+        type: Sequelize.STRING,
+        allowNull: true
+    },
+    email: {
         type: Sequelize.STRING,
         allowNull: true
     },

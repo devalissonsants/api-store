@@ -1,25 +1,26 @@
 const express = require('express');
 const router = express.Router();
-const postsService = require('../service/orderService');
+const clientService = require('../service/clientService');
 
+// restful => client
+router.get('/client', async function(req, res) {
+    res.send(await clientService.getAllClient());
+});
+router.get('/client/:id', async function(req, res) {
+    res.send(await clientService.getClient(req.params['id']));
+});
+router.post('/client', async function(req, res) {});
+router.put('/client/:id', async function(req, res) {});
+router.delete('/client/:id', async function(req, res) {});
+
+
+//restful => route order of service
 router.get('/order-of-service', async function(req, res) {
     res.json('teste');
 });
-
-router.get('/order-of-service/:id', async function(req, res) {
-
-});
-
-router.post('/order-of-service', async function(req, res) {
-
-});
-
-router.put('/order-of-service/:id', async function(req, res) {
-
-});
-
-router.delete('/order-of-service/:id', async function(req, res) {
-
-});
+router.get('/order-of-service/:id', async function(req, res) {});
+router.post('/order-of-service', async function(req, res) {});
+router.put('/order-of-service/:id', async function(req, res) {});
+router.delete('/order-of-service/:id', async function(req, res) {});
 
 module.exports = router;
