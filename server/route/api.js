@@ -1,6 +1,12 @@
 const express = require('express');
 const router = express.Router();
+var bodyParser = require('body-parser');
 const clientService = require('../service/clientService');
+
+// parse application/x-www-form-urlencoded
+router.use(bodyParser.urlencoded({ extended: false }));
+// parse application/json
+router.use(bodyParser.json())
 
 // restful => client
 router.get('/client', async function(req, res) {
@@ -9,9 +15,15 @@ router.get('/client', async function(req, res) {
 router.get('/client/:id', async function(req, res) {
     res.send(await clientService.getClient(req.params['id']));
 });
-router.post('/client', async function(req, res) {});
-router.put('/client/:id', async function(req, res) {});
-router.delete('/client/:id', async function(req, res) {});
+router.post('/client', async function(req, res) {
+    res.send(await clientService.postClient(req.body));
+});
+router.put('/client/:id', async function(req, res) {
+    res.send(await clientService.putClient(req.params['id'], req.body));
+});
+router.delete('/client/:id', async function(req, res) {
+    res.send(await clientService.delClient(req.params['id']));
+});
 
 
 //restful => route order of service

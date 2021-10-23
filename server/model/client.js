@@ -8,7 +8,7 @@ const Client = database.define('client', {
         allowNull: false,
         primaryKey: true
     },
-    nome: {
+    name: {
         type: Sequelize.STRING,
         allowNull: false
     },
