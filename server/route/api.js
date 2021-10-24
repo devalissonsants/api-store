@@ -3,6 +3,7 @@ const router = express.Router();
 var bodyParser = require('body-parser');
 const clientService = require('../service/clientService');
 const productService = require('../service/productService');
+const orderService = require('../service/orderService');
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
@@ -43,11 +44,19 @@ router.delete('/product-or-service/:id', async function(req, res) {
 
 //restful => order of service
 router.get('/order-of-service', async function(req, res) {
-
+    res.send(await orderService.getAllOrder());
 });
-router.get('/order-of-service/:id', async function(req, res) {});
-router.post('/order-of-service', async function(req, res) {});
-router.put('/order-of-service/:id', async function(req, res) {});
-router.delete('/order-of-service/:id', async function(req, res) {});
+router.get('/order-of-service/:id', async function(req, res) {
+    res.send(await orderService.getOrder(req.params['id']));
+});
+router.post('/order-of-service', async function(req, res) {
+    res.send(await orderService.postOrder(req.body));
+});
+router.put('/order-of-service/:id', async function(req, res) {
+    res.send(await orderService.putOrder(req.params['id'], req.body));
+});
+router.delete('/order-of-service/:id', async function(req, res) {
+    res.send(await orderService.delOrder(req.params['id']));
+});
 
 module.exports = router;
