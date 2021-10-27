@@ -1,21 +1,17 @@
-const Sequelize = require('sequelize');
-const database = require('../infra/sequelizeDB');
+const { Model, DataTypes } = require('sequelize');
 
-const Product = database.define('product', {
-    id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        allowNull: false,
-        primaryKey: true
-    },
-    description: {
-        type: Sequelize.STRING,
-        allowNull: false
-    },
-    code: {
-        type: Sequelize.STRING,
-        allowNull: true
-    },
-})
-
+class Product extends Model {
+    static init(sequelize) {
+        super.init({
+            description: DataTypes.STRING,
+            code: DataTypes.STRING,
+            type: DataTypes.CHAR(2),
+        }, {
+            sequelize
+        })
+    }
+    static associate(models) {
+        this.belongsToMany(models.Order, { foreignKey: 'product_id', through: 'order_has_products', as: 'orders' });
+    }
+}
 module.exports = Product;

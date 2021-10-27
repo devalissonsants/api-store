@@ -1,40 +1,16 @@
-const Sequelize = require('sequelize');
-const database = require('../infra/sequelizeDB');
+const { Model, DataTypes } = require('sequelize');
 
-const OrderHasProduct = database.define('order_has_product', {
-    id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        allowNull: false,
-        primaryKey: true
-    },
-    id_order: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'orders',
-            key: 'id'
-        }
-    },
-    id_product: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'products',
-            key: 'id'
-        }
-    },
-    quantity: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-    },
-    unitary_value: {
-        allowNull: false,
-        type: Sequelize.DOUBLE,
-    },
-    type: {
-        allowNull: null,
-        type: Sequelize.CHAR(2),
-    },
-})
+class OrderHasProduct extends Model {
+    static init(sequelize) {
+        super.init({
+            order_id: DataTypes.INTEGER,
+            product_id: DataTypes.INTEGER,
+            code: DataTypes.STRING,
+            quantity: DataTypes.INTEGER,
+            unitary_value: DataTypes.DOUBLE,
+        }, {
+            sequelize
+        })
+    }
+}
 module.exports = OrderHasProduct;

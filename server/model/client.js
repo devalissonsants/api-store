@@ -1,51 +1,24 @@
-const Sequelize = require('sequelize');
-const database = require('../infra/sequelizeDB');
+const { Model, DataTypes } = require('sequelize');
 
-const Client = database.define('client', {
-    id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        allowNull: false,
-        primaryKey: true
-    },
-    name: {
-        type: Sequelize.STRING,
-        allowNull: false
-    },
-    cpf: {
-        type: Sequelize.STRING,
-        allowNull: true,
-        unique: true
-    },
-    state: {
-        type: Sequelize.STRING,
-        allowNull: true
-    },
-    city: {
-        type: Sequelize.STRING,
-        allowNull: true
-    },
-    address: {
-        type: Sequelize.STRING,
-        allowNull: true
-    },
-    complement: {
-        type: Sequelize.STRING,
-        allowNull: true
-    },
-    number: {
-        type: Sequelize.STRING,
-        allowNull: true
-    },
-    phone_number: {
-        type: Sequelize.STRING,
-        allowNull: true
-    },
-    email: {
-        type: Sequelize.STRING,
-        allowNull: true
-    },
-    note: Sequelize.STRING
-})
-
+class Client extends Model {
+    static init(sequelize) {
+        super.init({
+            name: DataTypes.STRING,
+            cpf: DataTypes.STRING,
+            state: DataTypes.STRING,
+            city: DataTypes.STRING,
+            address: DataTypes.STRING,
+            complement: DataTypes.STRING,
+            number: DataTypes.STRING,
+            phone_number: DataTypes.STRING,
+            email: DataTypes.STRING,
+            note: DataTypes.STRING,
+        }, {
+            sequelize
+        })
+    }
+    static associate(models) {
+        this.hasMany(models.Order, { foreignKey: 'client_id', as: 'orders ' });
+    }
+}
 module.exports = Client;

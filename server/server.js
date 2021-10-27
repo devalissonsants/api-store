@@ -1,18 +1,7 @@
 const express = require('express');
 const app = express();
 app.use('/', require('./route/api'));
-
-(async() => {
-    const database = require('./infra/sequelizeDB');
-    const Client = require('./model/client');
-
-    try {
-        const result = await database.sync();
-        console.log('successful => create tables');
-    } catch (error) {
-        console.log(error);
-    }
-})();
+require('./database/connection');
 
 
 app.listen(3000);

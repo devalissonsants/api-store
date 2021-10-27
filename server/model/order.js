@@ -1,37 +1,18 @@
-const Sequelize = require('sequelize');
-const database = require('../infra/sequelizeDB');
-const Client = require('./client');
-
-const Order = database.define('order', {
-    id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        allowNull: false,
-        primaryKey: true
-    },
-    request_number: {
-        type: Sequelize.STRING,
-        allowNull: true
-    },
-    id_client: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: { // Client belongsTo Order 1:1
-            model: 'clients',
-            key: 'id'
-        }
-    },
-    date: {
-        type: Sequelize.DATE,
-    },
-    note: {
-        type: Sequelize.STRING,
-    },
-    payment_type: {
-        type: Sequelize.STRING,
-    },
-})
-
-Order.hasOne(Client);
-
+const { Model, DataTypes } = require('sequelize');
+class Order extends Model {
+    static init(sequelize) {
+        super.init({
+            request_number: DataTypes.STRING,
+            date: DataTypes.DATE,
+            note: DataTypes.STRING,
+            payment_type: DataTypes.CHAR(2),
+        }, {
+            sequelize
+        })
+    }
+    static associate(models) {
+        this.belongsTo(models.Client, { foreignKey: 'client_id', as: 'client' });
+        this.belongsToMany(models.Product, { foreignKey: 'order_id', through: 'order_has_products', as: 'products' });
+    }
+}
 module.exports = Order;
